@@ -10,7 +10,7 @@ import math
 status = "Ableton Live 22 (now costs $1000 per upgrade)"
 #status = "Testing new features!"
 version = "Alpha 1.0a"
-updatetime = "2023/11/25 09:01"
+updatetime = "2023/11/25 09:14"
 changes = "**(Alpha 1.0)** Created bot, added commands and compiled to exe!!! Yay!!\n**(a)** Fixed bug where version command conflicted with invite command"
 path = os.getcwd()
 print(f"Awesomeness Bot v{version}")

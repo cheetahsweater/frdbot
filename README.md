@@ -13,7 +13,7 @@ This will be split into two sections: one for features specifically requested by
     - [ ]  "Special" role assignment
 - [x]  Framework for commands
     - [x]  Invite command
-    - [ ]  Rules command
+    - [x]  Rules command
     - [ ]  Info command
     - [ ]  Moderators command
     - [ ]  Sample pack command

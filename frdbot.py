@@ -10,8 +10,8 @@ import math
 status = "Ableton Live 22 (now costs $1000 per upgrade)"
 #status = "Testing new features!"
 version = "Alpha 1.0"
-updatetime = "2023/11/25 06:20"
-changes = "(Alpha 1.0) Created bot"
+updatetime = "2023/11/25 09:01"
+changes = "(Alpha 1.0) Created bot, added commands and compiled to exe!!! Yay!!"
 path = os.getcwd()
 print(f"Awesomeness Bot v{version}")
 print(updatetime)
@@ -62,6 +62,10 @@ def award_points(content):
 @client.slash_command(description="Returns a @futureriddimdaily server invite link",guild_ids=[1172027590287052811])
 async def invite(ctx): 
     await ctx.respond("🩵**Get your friends in here!!**🩷\n*Discord Invite* :: https://discord.gg/kTWTkgRf5M")
+
+@client.slash_command(description="Returns version number, date/time, and changelog (for nerds)",guild_ids=[1172027590287052811])
+async def invite(ctx): 
+    await ctx.respond(f"FRDBot\nVersion {version}\n{updatetime}\n\n__Changelog__\n{changes}")
 
 @client.slash_command(description="Returns @futureriddimdaily contact info as seen in the info/rules channel",guild_ids=[1172027590287052811])
 async def info(ctx): 

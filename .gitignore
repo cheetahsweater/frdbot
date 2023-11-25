@@ -1,2 +1,7 @@
 .env
 assets/
+build/
+dist/
+compile.bat
+compile FRDBot.lnk
+frdbot.spec

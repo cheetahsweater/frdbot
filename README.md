@@ -14,7 +14,7 @@ This will be split into two sections: one for features specifically requested by
 - [x]  Framework for commands
     - [x]  Invite command
     - [x]  Rules command
-    - [ ]  Info command
+    - [x]  Info command
     - [ ]  Moderators command
     - [ ]  Sample pack command
     - [ ]  Bytepatch info command

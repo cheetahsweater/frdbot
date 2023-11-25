@@ -11,7 +11,7 @@ This will be split into two sections: one for features specifically requested by
 - [x]  Leveling system
     - [x]  "Active Member" role assignment
     - [ ]  "Special" role assignment
-- [ ]  Framework for commands
+- [ ]  *Framework for commands*
     - [ ]  Invite command
     - [ ]  Rules command
     - [ ]  Info command

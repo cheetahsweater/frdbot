@@ -13,7 +13,7 @@ versionnum = "Alpha 1.0b"
 updatetime = "2023/11/25 09:17"
 changes = "**(Alpha 1.0)** Created bot, added commands and compiled to exe!!! Yay!!\n**(a)** Fixed bug where version command conflicted with invite command\n**(b)** Fixed bug that made version command not display version number"
 path = os.getcwd()
-print(f"Awesomeness Bot v{versionnum}")
+print(f"Future Riddim Daily Bot v{versionnum}")
 print(updatetime)
 print("Gay")
 load_dotenv()

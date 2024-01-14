@@ -6,12 +6,13 @@ import os
 import json
 from json import JSONDecodeError
 import math
+import random
 
-status = "Ableton Live 22 (now costs $1000 per upgrade)"
+status = "Ableton Live 20 (now costs $1000 per upgrade)"
 #status = "Testing new features!"
-versionnum = "Alpha 1.0b"
-updatetime = "2023/11/25 09:17"
-changes = "**(Alpha 1.0)** Created bot, added commands and compiled to exe!!! Yay!!\n**(a)** Fixed bug where version command conflicted with invite command\n**(b)** Fixed bug that made version command not display version number"
+versionnum = "Alpha 1.1"
+updatetime = "2024/01/14 12:29"
+changes = "**(Alpha 1.1)** Updated level-up messages"
 path = os.getcwd()
 print(f"Future Riddim Daily Bot v{versionnum}")
 print(updatetime)
@@ -105,7 +106,19 @@ async def on_message(message):
                         await message.author.add_roles(role)
                     except Exception as e:
                         await message.channel.send(e) #DEBUG
-                await message.channel.send(f"<:frdCaption1:1173323899539308754> if true: <@{message.author.id}> has reached level {curlevel} <:frdSoldier1:1173165919036506124>")
+                msg = random.choice(range(1,7))
+                if msg == 1:
+                    await message.channel.send(f"<:frdCaption1:1173323899539308754> if true: <@{message.author.id}> has reached level {curlevel}")
+                if msg == 2:
+                    await message.channel.send(f"OMG! <@{message.author.id}> leveled up! They are now level {curlevel}!")
+                if msg == 3:
+                    await message.channel.send(f"Holy Smokes!! <@{message.author.id}> leveled up and is now level {curlevel}!")
+                if msg == 4:
+                    await message.channel.send(f"Yooo... <@{message.author.id}> just leveled up! They are now level {curlevel}...")
+                if msg == 5:
+                    await message.channel.send(f"A... <@{message.author.id}> just leveled up! 👀 Congrats on level {curlevel} #gang <:frdSoldier1:1173165919036506124>")
+                if msg == 6:
+                    await message.channel.send(f"<@{message.author.id}> was spotted <:frdSpotted1:1173129330667311197> leveling up! They are now level {curlevel}! ")
             levels[str(message.author.id)] = calculate_level(frd[str(message.author.id)])
         except KeyError:
             levels[str(message.author.id)] = calculate_level(frd[str(message.author.id)])

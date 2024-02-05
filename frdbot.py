@@ -11,9 +11,9 @@ from scipy.optimize import newton
 
 status = "Ableton Live 20 (now costs $1000 per upgrade)"
 #status = "Testing new features!"
-versionnum = "1.2"
-updatetime = "2024/02/04 22:37"
-changes = "**(1.2)** Updated level-up system so that XP/levels accrue slower"
+versionnum = "1.3"
+updatetime = "2024/02/04 23:01"
+changes = "**(1.3)** Disabled level-up system until I can properly fix it"
 path = os.getcwd()
 print(f"Future Riddim Daily Bot v{versionnum}")
 print(updatetime)
@@ -52,7 +52,7 @@ except JSONDecodeError:
     file.close()
     pass
 
-# shoutout chatGPT for the math help
+'''# shoutout chatGPT for the math help
 coefficients = [2459.81826343, -39.83367834, -26.84958046, 3.38057449]
 
 def xp_for_level(level, coefs):
@@ -94,7 +94,7 @@ def award_points(content):
     d_adj = d * scale_factor
 
     # Return the XP awarded for the actual message length, scaled appropriately
-    return c_adj + ((math.log(x + 1) - math.log(a + 1)) * (d_adj - c_adj)) / (math.log(b + 1) - math.log(a + 1))
+    return c_adj + ((math.log(x + 1) - math.log(a + 1)) * (d_adj - c_adj)) / (math.log(b + 1) - math.log(a + 1))'''
 
 
 @client.slash_command(description="Returns a @futureriddimdaily server invite link",guild_ids=[1172027590287052811])
@@ -118,7 +118,7 @@ async def on_ready():
     await client.change_presence(activity=discord.Game(name=f"{status}"))
     print('Bot is online!')
 
-@client.event
+'''@client.event
 async def on_message(message):
     if message.author == client.user:
         return
@@ -161,6 +161,6 @@ async def on_message(message):
             levels[str(message.author.id)] = calculate_level(frd[str(message.author.id)])
         with open(f"{path}\\assets\\levels.json", "w") as file:
             file.write(json.dumps(levels))
-            file.close()
+            file.close()'''
 
 client.run(TOKEN)

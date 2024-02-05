@@ -7,12 +7,13 @@ import json
 from json import JSONDecodeError
 import math
 import random
+from scipy.optimize import newton
 
 status = "Ableton Live 20 (now costs $1000 per upgrade)"
 #status = "Testing new features!"
-versionnum = "Alpha 1.1"
-updatetime = "2024/01/14 12:29"
-changes = "**(Alpha 1.1)** Updated level-up messages"
+versionnum = "1.2"
+updatetime = "2024/02/04 22:37"
+changes = "**(1.2)** Updated level-up system so that XP/levels accrue slower"
 path = os.getcwd()
 print(f"Future Riddim Daily Bot v{versionnum}")
 print(updatetime)
@@ -51,14 +52,50 @@ except JSONDecodeError:
     file.close()
     pass
 
-def calculate_level(xp):
-    return math.floor(math.sqrt(5 * xp + 5625) / 5 - 15)
+# shoutout chatGPT for the math help
+coefficients = [2459.81826343, -39.83367834, -26.84958046, 3.38057449]
 
+def xp_for_level(level, coefs):
+    return sum(coef * (level ** i) for i, coef in enumerate(coefs))
+
+# again: shoutout chatGPT for the math help
+def calculate_level(xp):
+    # Define the function whose root (zero) we want to find
+    def f(level):
+        return xp_for_level(level, coefficients) - xp
+
+    # Use the Newton-Raphson method to find a root, starting with an initial guess
+    initial_guess = 1
+    level = newton(f, initial_guess)
+    return math.floor(level)  # Level should be an integer
+
+import math
+
+# AGAIN: shoutout chatGPT for the math help
 def award_points(content):
     x = len(content)
-    a, b = 0, 2000  #Message length range
-    c, d = 8, 10    #XP range
-    return c + ((math.log(x + 1) - math.log(a + 1)) * (d - c)) / (math.log(b + 1) - math.log(a + 1))
+    a, b = 1, 2000  # Message length range
+    average_message_length = 75  # New average message length
+    total_messages = 2000
+    cumulative_xp_for_level_30 = 68375.7  # Cumulative XP needed for level 30
+
+    # The average XP per message needed to reach level 30 after 2000 messages
+    average_xp_per_message = cumulative_xp_for_level_30 / total_messages
+
+    # We want the XP for a message of average length (75 characters) to be the average XP per message
+    xp_for_average_length = average_xp_per_message
+
+    # Calculate the XP range scale factor based on the average message length
+    c, d = 8, 10  # Base XP range for the minimum and maximum message lengths
+    scale_factor = xp_for_average_length / ((c + ((math.log(average_message_length + 1) - math.log(a + 1)) * (d - c)) / (math.log(b + 1) - math.log(a + 1))))
+
+    # Adjusted XP range based on the scale factor
+    c_adj = c * scale_factor
+    d_adj = d * scale_factor
+
+    # Return the XP awarded for the actual message length, scaled appropriately
+    return c_adj + ((math.log(x + 1) - math.log(a + 1)) * (d_adj - c_adj)) / (math.log(b + 1) - math.log(a + 1))
+
 
 @client.slash_command(description="Returns a @futureriddimdaily server invite link",guild_ids=[1172027590287052811])
 async def invite(ctx): 

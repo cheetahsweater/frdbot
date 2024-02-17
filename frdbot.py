@@ -9,11 +9,11 @@ import math
 import random
 from scipy.optimize import newton
 
-status = "Ableton Live 20 (now costs $1000 per upgrade)"
+status = "Ableton Live 23 (now costs $6.14 per upgrade)"
 #status = "Testing new features!"
-versionnum = "1.3"
-updatetime = "2024/02/04 23:01"
-changes = "**(1.3)** Disabled level-up system until I can properly fix it"
+versionnum = "1.4"
+updatetime = "2024/02/17 16:26"
+changes = "**(1.4)** Added \"merch\" and \"bytepatch\" commands"
 path = os.getcwd()
 print(f"Future Riddim Daily Bot v{versionnum}")
 print(updatetime)
@@ -59,15 +59,22 @@ def xp_for_level(level, coefs):
     return sum(coef * (level ** i) for i, coef in enumerate(coefs))
 
 # again: shoutout chatGPT for the math help
+from scipy.optimize import brentq
+
+# Updated calculate_level function using brentq
 def calculate_level(xp):
     # Define the function whose root (zero) we want to find
     def f(level):
         return xp_for_level(level, coefficients) - xp
 
-    # Use the Newton-Raphson method to find a root, starting with an initial guess
-    initial_guess = 1
-    level = newton(f, initial_guess)
+    # Set a reasonable bracket for levels, assuming level 100 is the maximum reasonable level
+    level_min = 1
+    level_max = 100
+
+    # Use the brentq method to find a root within the bracket
+    level = brentq(f, level_min, level_max)
     return math.floor(level)  # Level should be an integer
+
 
 import math
 
@@ -112,6 +119,15 @@ async def info(ctx):
 @client.slash_command(description="Returns the rules as seen in the info/rules channel",guild_ids=[1172027590287052811])
 async def rules(ctx): 
     await ctx.respond(":notebook:RULES:notebook:\n**—1). Respect everyone...** :: *Bullying and harrasment cannot be tolerated. Hate and/or bigotry toward any race, identity, religion, etc. cannot be tolerated.*\n**—2). Please, be normal...** ::  *Refrain from posting media which is NSFW, violent/gory or otherwise disturbing. Refrain from unwarranted mentions of explicit and/or discomforting topics such as self-harm, sex/fetishes, suicide, etc. Just don't be a goddamn weirdo man, seriously...*\n**—3). Respect the mods...** :: *Mods are here to accentuate your good experience here in the server- and are human, too. They will intervene and may take actions when necessary. If you are issued a penalty or ban, please trust that we have done our duty properly and proceed accordingly.*\n**—4). No spam of ANY kind...** :: *Do not tag anyone excessively, do not spam voice or text chats, do not promote your own work or product/service excessively. ('Networking' isn't necessarily discouraged but tread lightly...)*\n**—5). Use the server properly...** :: *Maintain a level of contingency when conversing in channels. Be sure to abide by each channel's topic and rules.*")
+
+@client.slash_command(description="Returns more info on the lovely BytePatch!!",guild_ids=[1172027590287052811])
+async def bytepatch(ctx): 
+    await ctx.respond(f"https://bytepat.ch/\n**Byte Patch's goal is to make reasonably priced, high-quality, and nostalgic embroidered patches. Can't find what you like? Reach out for custom patches as low as $20.**")
+
+@client.slash_command(description="Returns more info on the lovely BytePatch!!",guild_ids=[1172027590287052811])
+async def merch(ctx): 
+    await ctx.respond(f"**bytepatch x @frd - merchandise drop #1**\nAvailable for a **limited time**:\nhttps://bytepat.ch/home/ols/categories/frd\nGet your hats, t-shirts, & patches while you can!")
+
 
 @client.event
 async def on_ready():
